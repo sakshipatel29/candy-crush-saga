@@ -15,6 +15,7 @@ window.onload = function(){
     window.setInterval(function(){
         crushCandy();
         slideCandy();
+        generateCandy();
     }, 100);
 }
 
@@ -106,6 +107,7 @@ function dragEnd() {
 
 function crushCandy(){
     crushThree();
+    document.getElementById("score").innerText = score;
 }
 
 function crushThree(){
@@ -118,6 +120,7 @@ function crushThree(){
                 candy1.src = "./Images/blank.png";
                 candy2.src = "./Images/blank.png";
                 candy3.src = "./Images/blank.png";
+                score += 30;
             }
         }
     }
@@ -131,6 +134,7 @@ function crushThree(){
                 candy1.src = "./Images/blank.png";
                 candy2.src = "./Images/blank.png";
                 candy3.src = "./Images/blank.png";
+                score += 30;
             }
         }
     }
@@ -172,6 +176,14 @@ function slideCandy(){
         }
         for(let r = ind; r >= 0; r--){
             board[r][c].src = "/Images/blank.png";
+        }
+    }
+}
+
+function generateCandy(){
+    for(let c = 0; c < columns; c++){
+        if(board[0][c].src.includes("blank")) {
+            board[0][c].src = "./Images/" + randomCandy() + ".png";
         }
     }
 }
