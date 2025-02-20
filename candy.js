@@ -1,5 +1,3 @@
-
-
 var candies = ["Blue", "Green", "Red", "Purple", "Yellow", "Orange"];
 var board = [];
 var rows = 9;

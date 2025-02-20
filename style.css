@@ -5,6 +5,13 @@ body {
     color: white;
     text-align: center;
 }
+h1{
+    color: blueviolet;
+}
+
+h2{
+    color: blue;
+}
 
 #board {
     width: 450px;
