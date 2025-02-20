@@ -11,6 +11,10 @@ var otherTile;
 
 window.onload = function(){
     startGame();
+
+    window.setInterval(function(){
+        crushCandy();
+    }, 100);
 }
 
 function randomCandy() {
@@ -61,6 +65,10 @@ function dragDrop(){
 }
 
 function dragEnd() {
+
+    if(currTile.src.includes("blank") || (currTile.src.includes("blank"))){
+        return;
+    }
     let currCoords = currTile.id.split("-");
     let r = parseInt(currCoords[0]);
     let c = parseInt(currCoords[1]);
@@ -78,9 +86,76 @@ function dragEnd() {
     let isAdjacent = moveDown || moveLeft || moveRight || moveUp;
 
     if(isAdjacent){
+
         let currImg = currTile.src;
         let otherImg = otherTile.src;
         currTile.src = otherImg;
         otherTile.src = currImg;
+
+        let validMove = checkValid();
+
+        if(!validMove){
+            let currImg = currTile.src;
+            let otherImg = otherTile.src;
+            currTile.src = otherImg;
+            otherTile.src = currImg;
+        }
     }
+}
+
+function crushCandy(){
+    crushThree();
+}
+
+function crushThree(){
+    for( let r = 0; r < rows; r++){
+        for(let c = 0; c < columns-2; c++){
+            let candy1 = board[r][c];
+            let candy2 = board[r][c + 1];
+            let candy3 = board[r][c + 2];
+            if( candy1.src == candy2.src && candy2.src  == candy3.src && !candy1.src.includes("blank")){
+                candy1.src = "./Images/blank.png";
+                candy2.src = "./Images/blank.png";
+                candy3.src = "./Images/blank.png";
+            }
+        }
+    }
+
+    for(let c = 0; c < columns; c++){
+        for(let r = 0; r < rows-2; r++){
+            let candy1 = board[r][c];
+            let candy2 = board[r + 1][c];
+            let candy3 = board[r + 2][c];
+            if( candy1.src == candy2.src && candy2.src  == candy3.src && !candy1.src.includes("blank")){
+                candy1.src = "./Images/blank.png";
+                candy2.src = "./Images/blank.png";
+                candy3.src = "./Images/blank.png";
+            }
+        }
+    }
+}
+
+function checkValid(){
+    for( let r = 0; r < rows; r++){
+        for(let c = 0; c < columns-2; c++){
+            let candy1 = board[r][c];
+            let candy2 = board[r][c + 1];
+            let candy3 = board[r][c + 2];
+            if( candy1.src == candy2.src && candy2.src  == candy3.src && !candy1.src.includes("blank")){
+                return true;
+            }
+        }
+    }
+
+    for(let c = 0; c < columns; c++){
+        for(let r = 0; r < rows-2; r++){
+            let candy1 = board[r][c];
+            let candy2 = board[r + 1][c];
+            let candy3 = board[r + 2][c];
+            if( candy1.src == candy2.src && candy2.src  == candy3.src && !candy1.src.includes("blank")){
+                return true;
+            }
+        }
+    }
+    return false;
 }
